@@ -1,14 +1,14 @@
 <script>
   import SeedSubmitIndicator from "./SeedSubmitIndicator.svelte";
   import BeyondFormField from "./BeyondFormField.svelte";
-  export let formSchema,
-    note,
-    buttonText, 
-    buttonClass, 
-    onSubmit, 
-    maxW, 
-    notedMaxW, 
-    submitting;
+  export let formSchema, // form schema of which the form displays with. :[]{}
+    note, // Extra note or text that needs that be displayed in the form.
+    buttonText, //The text on the submit button
+    buttonClass, // CSS class for submot button
+    onSubmit, //submit method
+    maxW, // Max width for form
+    notedMaxW, // if external note, the max width for the note container
+    submitting; // Submitting indicator
 
 
   const getNestedOptions=(form, load)=>{
@@ -45,22 +45,26 @@
     }
   }
 
-  // /** Vaidate form*/
-  // const validate=async()=>{    
-  //   formSchema = await formSchema.map(load=>({...load, checked:true}));
-  //   // formSchema = formSchema;
-  // }
-  // /** Validate form then perform Parent Submit*/
-  // const submit=async()=>{
-  //   await validate();
-  //   await onSubmit?.();
-  // }
+  /** Vaidate form*/
+  const validate=async()=>{    
+    formSchema = await formSchema.map(load=>({...load, checked:true}));
+    // formSchema = formSchema;
+  }
+  /** Validate form then perform Parent Submit*/
+  const submit=async()=>{
+    await validate();
+
+    if(formSchema.some(load=>load.invalid)) return;
+    let payload =  formSchema.reduce((loads, current)=>
+      ({...loads, [current.name]: current.value}),{});
+    await onSubmit?.(payload);
+  }
   
 </script>
 
 {#if formSchema}
   <div class="w-full text-center }">
-    <form on:submit|preventDefault={onSubmit} >
+    <form on:submit|preventDefault={submit} >
       <div class="grid grid-cols-2 gap-4">
         {#each formSchema as params, i (i)}
           <div class="{params.note? notedMaxW: maxW} 

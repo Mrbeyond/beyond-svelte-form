@@ -15,6 +15,7 @@
     invalid: false,
     checked: false,
     name: 'email',
+    labelClass:'text-indigo-900 font-semibold',
     boxContainerClass:'border',
     iconData: {
       iconType:'email',
@@ -53,6 +54,7 @@
     value:'',
     invalid: false,
     checked: false,
+    labelClass:'text-indigo-900 font-semibold',
     boxContainerClass:'border',
     name: 'password',
     iconData: {

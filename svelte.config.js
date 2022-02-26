@@ -4,7 +4,6 @@ import preprocess from "svelte-preprocess";
 const config = {
 	kit: {
 		adapter: adapter(),
-		target: '#svelte'
 	},
 	
 		preprocess: [preprocess({

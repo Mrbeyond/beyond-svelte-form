@@ -1,8 +1,8 @@
 <script>
   import  './../app.postcss';
 </script>
-<div>
-  <slot><!-- optional fallback --></slot>
+<div class="">
+  <slot></slot>
 </div>
 
 
